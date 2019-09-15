@@ -1,11 +1,22 @@
 #!/usr/bin/env python3
 from random import randint
 
-name = input("请输入你的名字：")
+# name = input("请输入你的名字：")
+
+with open('./files/number_plus.txt') as f:
+    info = f.read().split(' ')
+    name = info[0]
+    playtime = info[1]
+    min_lun = info[2]
+    average_lun = info[3]
+
+print('{0}, 你已经玩了 {1} 次，最少 {2} 轮猜出答案，平均 {3} 轮猜出答案'.format(name, playtime, min_lun, average_lun))
 
 playtime = 0  # 玩的次数
 lun = 0  # 每次猜的轮数
 lun_list = []  # 每次总轮数的列表
+min_lun = 0
+average_lun = 0
 
 while True:
     playtime += 1  # 外部控制游戏次数，每次循环加 1
@@ -34,12 +45,16 @@ while True:
 
     print('按任意键继续，回车退出')
     if not input():
-        with open('./files/number.txt', 'w') as f:
-            f.write('姓名：{0}\n'.format(name))
-            f.write('总游戏次数：{0}\n'.format(playtime))
-            f.write('最快猜出轮数：{0}\n'.format(min_lun))
-            f.write('猜过的总轮数：{0}\n'.format(sum(lun_list)))
-        print('游戏统计已保存到 {0} ,退出游戏，欢迎下次再来！'.format('./files/number.txt'))
+        with open('./files/number_plus.txt', 'w') as f:
+            f.write(name)
+            f.write(' ')
+            f.write(str(playtime))
+            f.write(' ')
+            f.write(str(min_lun))
+            f.write(' ')
+            # f.write('猜过的总轮数：{0}\n'.format(sum(lun_list)))
+            f.write(str(average_lun))
+        print('游戏统计已保存到 {0} ,退出游戏，欢迎下次再来！'.format('./files/number_plus.txt'))
         break
     else:
         continue
